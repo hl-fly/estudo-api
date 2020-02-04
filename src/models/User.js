@@ -4,7 +4,8 @@ import {Schema, model} from 'mongoose';
 */
 const UserSchema = new Schema({
     email: String,
-    password: String
+    password: String,
+    fave: Array
 });
 
 export default model ('User', UserSchema)
