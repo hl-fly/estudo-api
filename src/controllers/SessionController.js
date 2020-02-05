@@ -12,7 +12,6 @@ class SessionController {
             password: Yup.string().required(),
         });
 
-        const {user} = req.params;
         const {email, password} = req.body;
         const {email_log} = req.headers;
         const {password_log} = req.headers;
@@ -21,7 +20,7 @@ class SessionController {
             return res.status(400).json({error: "Body invalido"});
         }
 
-        let userJson = await User.findOne({user});
+        let userJson = await User.findOne({email: email_log});
 
         if(!user) { return res.status(400).json({error: "Usuario usuario não existente"}); }
 
@@ -29,7 +28,7 @@ class SessionController {
             return res.status(401).json({error: "Usuario invalido"});
         }
 
-        await User.updateOne({email: user}, {
+        await User.updateOne({email: email_log}, {
             password,
             email
         })

@@ -5,7 +5,7 @@ import FaveController from './controllers/FaveController';
 const routes = new Router();
 
 routes.post('/sessions', SessionController.store);
-routes.put('/client_edit/:user', SessionController.edit);
+routes.put('/client_edit', SessionController.edit);
 routes.delete('/delete', SessionController.destoy);
 
 routes.put('/fave/:id', FaveController.edit);
