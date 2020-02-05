@@ -1,4 +1,5 @@
 import User from '../models/User';
+import * as Yup from 'yup';
 
 /*
     Criando, Altera e deleta usuario
@@ -6,16 +7,29 @@ import User from '../models/User';
 class SessionController {
 
     async edit(req, res) {
-        const {new_value} = req.params;
+        const schema = Yup.object().shape({
+            email: Yup.string().email().required(),
+            password: Yup.string().required(),
+        });
+
+        const {user} = req.params;
         const {email, password} = req.body;
         const {email_log} = req.headers;
         const {password_log} = req.headers;
 
-        if(String(email_log) !== String(email) || String(password_log) !== String(password)) {
+        if(!(await schema.isValid(req.body))) {
+            return res.status(400).json({error: "Body invalido"});
+        }
+
+        let userJson = await User.findOne({user});
+
+        if(!user) { return res.status(400).json({error: "Usuario usuario não existente"}); }
+
+        if(String(email_log) !== String(userJson.email) || String(password_log) !== String(userJson.password)) {
             return res.status(401).json({error: "Usuario invalido"});
         }
 
-        await User.updateOne({email: new_value}, {
+        await User.updateOne({email: user}, {
             password,
             email
         })
@@ -24,13 +38,22 @@ class SessionController {
     }
 
     async store(req, res) {
+        const schema = Yup.object().shape({
+            email: Yup.string().email().required(),
+            password: Yup.string().required(),
+        });
+
         const {email} = req.body;
         const {password} = req.body;
+
+        if(!(await schema.isValid(req.body))) {
+            return res.status(400).json({error: "Body invalido"});
+        }
 
         let user = await User.findOne({email});
         console.log(email);
         if(!user){
-            let user = await User.create({email, password})
+            let user = await User.create({email, password});
             return res.json(user);
         }
 
