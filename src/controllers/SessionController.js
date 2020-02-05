@@ -62,15 +62,20 @@ class SessionController {
     }
 
     async destoy(req, res) {
-        const {email, password} = req.body;
         const {email_log} = req.headers;
         const {password_log} = req.headers;
+        // const {email} = req.body;
 
-        if(String(email_log) !== String(email) || String(password_log) !== String(password)) {
+      
+        let user = await User.findOne({email: email_log});
+
+        if(!user) { return res.status(400).json({error: "Usuario usuario não existente"}); }
+
+        if(String(email_log) !== String(user.email) || String(password_log) !== String(user.password)) {
             return res.status(401).json({error: "Usuario invalido"});
         }
 
-        await User.findByIdAndDelete({email});
+        await User.findByIdAndDelete(user._id);
 
         return res.json({message: "Conta Exccluida com sucesso"});
     }

@@ -9,7 +9,7 @@ routes.put('/client_edit/:user', SessionController.edit);
 routes.delete('/delete', SessionController.destoy);
 
 routes.put('/fave/:id', FaveController.edit);
-routes.get('/fave_list/:email', FaveController.show);
+routes.get('/fave_list', FaveController.show);
 
 
 

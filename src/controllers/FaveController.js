@@ -5,20 +5,19 @@ import * as Yup from 'yup';
 class FaveController {
 
     async edit(req, res) {
-        const schema = Yup.object().shape({
-            email: Yup.string().email().required(),
-        });
+        // const schema = Yup.object().shape({
+        //     email: Yup.string().email().required(),
+        // });
 
         const {email_log} = req.headers;
         const {password_log} = req.headers;
-        const {email} = req.body;
         const {id} = req.params;
 
-        if(!(await schema.isValid(req.body))) {
-            return res.status(400).json({error: "Body invalido"});
-        }
+        // if(!(await schema.isValid(req.body))) {
+        //     return res.status(400).json({error: "Body invalido"});
+        // }
 
-        let user = await User.findOne({email});
+        let user = await User.findOne({email: email_log});
 
         if(!user) { return res.status(400).json({error: "Usuario usuario não existente"}); }
 
@@ -39,12 +38,11 @@ class FaveController {
             const allFave = user.fave;
             allFave[user.fave.length] = body; 
 
-            await User.updateOne({email}, {
+            await User.updateOne({email: email_log}, {
                 fave: allFave
             });
 
-            console.log(body);
-            return res.json(user.fave);
+            return res.json({mess: "Item favoridado!"});
        })
         
     }
@@ -53,10 +51,9 @@ class FaveController {
 
         const {email_log} = req.headers;
         const {password_log} = req.headers;
-        const {email} = req.params;
 
       
-        let user = await User.findOne({email});
+        let user = await User.findOne({email: email_log});
 
         if(!user) { return res.status(400).json({error: "Usuario usuario não existente"}); }
 
