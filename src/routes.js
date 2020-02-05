@@ -12,5 +12,4 @@ routes.put('/fave/:id', FaveController.edit);
 routes.get('/fave_list', FaveController.show);
 
 
-
 export default routes;
