@@ -5,17 +5,10 @@ import * as Yup from 'yup';
 class FaveController {
 
     async edit(req, res) {
-        // const schema = Yup.object().shape({
-        //     email: Yup.string().email().required(),
-        // });
 
         const {email_log} = req.headers;
         const {password_log} = req.headers;
         const {id} = req.params;
-
-        // if(!(await schema.isValid(req.body))) {
-        //     return res.status(400).json({error: "Body invalido"});
-        // }
 
         let user = await User.findOne({email: email_log});
 
