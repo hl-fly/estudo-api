@@ -1,5 +1,5 @@
 # Estudo de API
-API Rest em nodeJs, teste de dev para o LuizaLabs
+API em nodeJs
 
 # Criar Conta (/sessions) POST
 Essa é a unica rota liberada para todos que quiserem se cadastrar. Após usuario estar cadastrado, todas as rotas se liberam para o mesmo
