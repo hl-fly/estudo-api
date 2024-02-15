@@ -1,4 +1,4 @@
-# DesafioLuizaLabs
+# Estudo de API
 API Rest em nodeJs, teste de dev para o LuizaLabs
 
 # Criar Conta (/sessions) POST
